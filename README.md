@@ -1,5 +1,3 @@
-# ip address
-> curl ifconfig.me
 # Bubbly Bliss - Bubble Tea Order Application
 
 A full-stack web application for ordering bubble tea, built with Express.js, MongoDB, and EJS templates using MVC architecture.
