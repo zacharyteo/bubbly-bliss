@@ -33,7 +33,7 @@ const teaSchema = new mongoose.Schema({
   }
 });
 
-const Tea = mongoose.model('Tea', teaSchema, 'Tea');
+const Tea = mongoose.model('Tea', teaSchema);
 
 //Methods here
 exports.retrieveAll = function() {

@@ -5,6 +5,10 @@ const customerSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  password: { 
+    type: String, 
+    required: true 
+  },
   email: {
     type: String,
     required: true,
@@ -33,8 +37,7 @@ const customerSchema = new mongoose.Schema({
   }
 });
 
-const Customer = mongoose.model('Customer', customerSchema, 'Customer');
-
+const Customer = mongoose.model('Customer', customerSchema);
 
 exports.findByEmail = function(email) {
   return Customer.findOne({ email: email });
@@ -45,21 +48,13 @@ exports.createAccount = function(newCustomer) {
 };
 
 exports.updateOrderHistory = async function(customerId, orderId) {
+  const customer = await Customer.findOne( { _id: customerId } );
 
-    const customer = await Customer.findOne( { _id: customerId } );
-    //const customer = Customer.findOne( { email: email } );
-    // console.log(`Customer: ${customer.name}: ${email}: ${customerId}`)
-    // if (customer) {
-    //     console.log(`Updated orderHistory for customer ${customer.name}`)
-    // }
-    // console.log(customer)
-    // Update customer order history
-    let orderHistory = customer.orderHistory;
-    // console.log(orderHistory)
-    orderHistory = orderHistory || [];
-    orderHistory.push(orderId)
-    // console.log(orderHistory)
-
-    return Customer.updateOne({ _id: customerId }, {orderHistory: orderHistory});
+  // Update customer order history
+  let orderHistory = customer.orderHistory;
+  orderHistory = orderHistory || [];
+  orderHistory.push(orderId)
+  
+  return Customer.updateOne({ _id: customerId }, {orderHistory: orderHistory});
 
 }

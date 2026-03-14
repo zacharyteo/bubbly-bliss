@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -17,11 +18,26 @@ server.set('view engine', 'ejs');
 server.use(express.urlencoded({ extended: true }));
 server.use(express.static(path.join(__dirname, 'public')));
 server.use(express.json());
+server.use(session({
+    secret: process.env.SECRET, // sign the session ID cookie. should be a long, random, and secure string, preferably stored in an environment variable
+    resave: false, // Prevents the session from being saved back to the session store if nothing has changed.
+    saveUninitialized: false // Prevents a new, empty session from being saved to the store.
+}));
 
 // Routes
+server.use('/account', require('./routes/account'));
 server.use('/menu', require('./routes/menu'));
 server.use('/order', require('./routes/order'));
 server.use('/reviews', require('./routes/reviews'));
+
+// server.get('/', (req, res) => {
+//     if (!req.session.visit_count) {
+//         req.session.visit_count = 0;
+//     }
+//     req.session.visit_count += 1;
+//     res.send('Number of visits: ' + req.session.visit_count + '<br><br><a href="/reset">Reset</a>');
+// });
+
 
 
 // Error handling middleware
@@ -44,7 +60,7 @@ async function connectDB() {
 
 function startServer() {
   const hostname = "localhost"; // Define server hostname
-  const port = process.env.PORT || 8000; // Define port number
+  const port = process.env.PORT || 3000; // Define port number
  
   // Start the server and listen on the specified hostname and port
   server.listen(port, () => {

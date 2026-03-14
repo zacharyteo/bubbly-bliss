@@ -4,10 +4,11 @@ const Tea = require('./../models/Tea');
 
 exports.createOrder = async (req, res) => {
   try {
+    // only authenticated users can create orders, so we can assume req.session.userId and req.session.email are available
+    let userId = req.session.userId;
+    let email = req.session.email;
+    let role = req.session.role;
 
-    let name = req.query.name || 'Guest';
-    let email = req.query.email || '';
-    let phone = req.query.phone || '';
     // retrieve selected teas and quantities 
     let selection = req.query.selection || [];
     selection = Array.isArray(selection) ? selection : [selection];
@@ -17,10 +18,10 @@ exports.createOrder = async (req, res) => {
     // Find or create customer
     let customer = await Customer.findByEmail(email);
    
-    if (!customer) {
-        customer = await Customer.createAccount({ name, email, phone });
-        // console.log(`NewCustomer: ${customer.name}`)
-    } 
+    // if (!customer) {
+    //     customer = await Customer.createAccount({ name, email, phone });
+    //     // console.log(`NewCustomer: ${customer.name}`)
+    // } 
     // console.log(customer)
     // console.log(customer._id)
   
@@ -30,6 +31,7 @@ exports.createOrder = async (req, res) => {
 
     for (let teaId of selection) {
         const tea = await Tea.findById(teaId);
+        console.log(tea.name)
         const quantity = parseInt(req.query[`${teaId}_quantity`]) || 0;
         if (quantity <= 0) continue; // Skip if quantity is not valid
         const sugarLevel = req.query[`${teaId}_sugar`] || '50%';

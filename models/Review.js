@@ -31,7 +31,7 @@ const reviewSchema = new mongoose.Schema({
   }
 });
 
-const Review = mongoose.model('Review', reviewSchema, 'Review');
+const Review = mongoose.model('Review', reviewSchema);
 
 exports.retrieveAll = function() {
   return Review.find();

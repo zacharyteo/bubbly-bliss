@@ -43,7 +43,7 @@ const orderSchema = new mongoose.Schema({
   }
 });
 
-const Order = mongoose.model('Order', orderSchema, 'Order');
+const Order = mongoose.model('Order', orderSchema);
 
 exports.findByID = function(orderId) {
   return Order.findOne({ orderId: orderId });

@@ -12,6 +12,7 @@ A full-stack web application for ordering bubble tea, built with Express.js, Mon
 - **Favorite Tea**: Like favorite teas, Menu will show how many 'likes' for each tea
 - **Personalized Recommendations**: Get tea suggestions based on preferences and order history
 - **User Account**: Create User Account and Log In/Out
+- **Add new teas**: Allow Admin user to create new teas
 
 ## Tech Stack
 
