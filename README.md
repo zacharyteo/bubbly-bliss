@@ -27,24 +27,34 @@ A full-stack web application for ordering bubble tea, built with Express.js, Mon
 ```
 bubbly-bliss/
 ├── controllers/          # MVC Controllers
+│   ├── AccountController.js
 │   ├── TeaController.js
 │   ├── OrderController.js
 │   ├── ReviewController.js
+├── middleware/              # utility functions
+│   ├── authMiddleware.js
 ├── models/              # MongoDB Models
-│   ├── Tea.js
+│   ├── Admin.js
 │   ├── Customer.js
+│   ├── Tea.js
 │   ├── Order.js
 │   └── Review.js
+├── public/              # static assets (images) 
+│   ├── images
+│   ├── index.html        # landing page
 ├── routes/              # Express Routes
+│   ├── account.js
 │   ├── menu.js
 │   ├── orders.js
 │   ├── reviews.js
 ├── views/               # EJS Templates
 │   ├── menu.ejs
+│   ├── confirmation.js
 │   ├── review-form.ejs
 │   ├── reviews.ejs
+│   ├── login.js
+│   ├── register.js
 │   └── error.ejs
-├── public/              # Static assets (images)
 ├── server.js               # Main application file
 ├── package.json
 ├── config.env                 # Environment variables
@@ -69,9 +79,7 @@ bubbly-bliss/
    - Update the `DB` in `config.env` file
 
 4. **Seed the database** (optional)
-   ```bash
-   node seed-db.js
-   ```
+   - import data/tea-data.json into MongoDB via Compass app
 
 5. **Start the application**
    ```bash
@@ -82,7 +90,7 @@ bubbly-bliss/
 
 6. **Open your browser**
    ```
-   http://localhost:8000
+   http://localhost:3000
    ```
 
 ## Usage
@@ -121,8 +129,15 @@ bubbly-bliss/
 - isAvailable: Boolean
 - tags: [String]
 
+### Admin
+- name: String
+- password: String
+- email: String (unique)
+- phone: String
+
 ### Customer
 - name: String
+- password: String
 - email: String (unique)
 - phone: String
 - preferences: Object
